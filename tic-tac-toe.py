@@ -71,7 +71,7 @@ def playerMove(letter):
         if move == place:
             if letter == "A":
                 changingBoard[index] = "X"
-            if letter == "B":
+            else:
                 changingBoard[index] = "O"
     print(*changingBoard, sep="")
     return changingBoard
@@ -92,22 +92,14 @@ def checkIfWinner(b, p):
     ):
         print("The winner is player " + p + "!")
         sys.exit()
-    return changingBoard
 
 
 # the actual game being played out
-playerMove("A")
-playerMove("B")
-playerMove("A")
-playerMove("B")
-playerMove("A")
 # we only need to start checking if there's a winner after the first player has played 3 times
-checkIfWinner(changingBoard, "A")
-playerMove("B")
-checkIfWinner(changingBoard, "B")
-playerMove("A")
-checkIfWinner(changingBoard, "A")
-playerMove("B")
-checkIfWinner(changingBoard, "B")
-playerMove("A")
-checkIfWinner(changingBoard, "A")
+for turn in range(5):
+    playerMove("A")
+    if turn > 2:
+        checkIfWinner(changingBoard, "A")
+    playerMove("B")
+    if turn > 2:
+        checkIfWinner(changingBoard, "B")
