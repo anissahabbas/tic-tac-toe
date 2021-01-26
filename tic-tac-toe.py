@@ -4,6 +4,7 @@ import sys
 #second board will be updating with X's and O's
 originalBoard = [' ', '1',' |  ','2','  | ','3','\n-------------\n ','4',' |  ','5','  | ','6','\n-------------\n ','7',' |  ','8','  | ','9','\n']
 changingBoard = [' ', ' ',' |  ',' ','  | ',' ','\n-------------\n ',' ',' |  ',' ','  | ',' ','\n-------------\n ',' ',' |  ',' ','  | ',' ','\n']
+possibleMoves = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
 
 numberMoves = 0
 
@@ -26,9 +27,17 @@ def playerMove(letter):
     global changingBoard, originalBoard
     print('Player ' + letter + ' enter your move: ')
     move = input()
+    #make sure that input is a digit from 1-9
+    if move not in possibleMoves or len(move) > 1:
+        print('Error: Please enter a number from 1-9:')
+        move = input()
     #use the original board to compare the player's input and then update the changing board
     for index, place in enumerate(originalBoard):
-        if move == place:
+        #make sure that player chooses an empty spot
+        if move == place and changingBoard[index] != ' ':
+            print("Error: Space already taken. Enter again:")
+            move = input()
+        elif move == place:
             if letter == 'A':
                 changingBoard[index] = 'X'
             if letter == 'B':
