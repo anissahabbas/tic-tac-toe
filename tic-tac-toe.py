@@ -5,6 +5,8 @@ import sys
 originalBoard = [' ', '1',' |  ','2','  | ','3','\n-------------\n ','4',' |  ','5','  | ','6','\n-------------\n ','7',' |  ','8','  | ','9','\n']
 changingBoard = [' ', ' ',' |  ',' ','  | ',' ','\n-------------\n ',' ',' |  ',' ','  | ',' ','\n-------------\n ',' ',' |  ',' ','  | ',' ','\n']
 
+numberMoves = 0
+
 #index locations to be used on the changing board:
 one = originalBoard.index('1')
 two = originalBoard.index('2')
@@ -19,6 +21,7 @@ nine = originalBoard.index('9')
 print(' TIC TAC TOE\n Player A starts with X, Player B follows with O\n To move, enter the number for where you would like to place your X/O')
 print(*originalBoard, sep='')
 
+
 def playerMove(letter):
     global changingBoard, originalBoard
     print('Player ' + letter + ' enter your move: ')
@@ -31,32 +34,33 @@ def playerMove(letter):
             if letter == 'B':
                 changingBoard[index] = 'O'
     print(*changingBoard, sep='')
-    return changingBoard
 
 
 #function to check who won
 #b represents the board and p the player who just went
 def checkIfWinner(b, p):
-    if (b[one] == b[five] == b[nine] or b[three] == b[five] == b[seven]
-            or b[one] == b[two] == b[three] or b[four] == b[five] == b[six] or b[seven] == b[eight] == b[nine] or
-            b[one] == b[four] == b[seven] or b[two] == b[five] == b[eight] or b[three] == b[six] == b[nine]):
+    if (b[one] == b[five] == b[nine] != ' ' or
+        b[three] == b[five] == b[seven] != ' ' or
+        b[one] == b[two] == b[three] != ' ' or
+        b[four] == b[five] == b[six] != ' ' or
+        b[seven] == b[eight] == b[nine] != ' ' or
+        b[one] == b[four] == b[seven] != ' ' or
+        b[two] == b[five] == b[eight] != ' ' or
+        b[three] == b[six] == b[nine] != ' ') :
         print('The winner is player ' + p + '!')
         sys.exit()
-    return changingBoard
 
 #the actual game being played out
-playerMove('A')
-playerMove('B')
-playerMove('A')
-playerMove('B')
-playerMove('A')
-#we only need to start checking if there's a winner after the first player has played 3 times
-checkIfWinner(changingBoard, 'A')
-playerMove('B')
-checkIfWinner(changingBoard, 'B')
-playerMove('A')
-checkIfWinner(changingBoard, 'A')
-playerMove('B')
-checkIfWinner(changingBoard, 'B')
-playerMove('A')
-checkIfWinner(changingBoard, 'A')
+while numberMoves < 9:
+    playerMove('A')
+    checkIfWinner(changingBoard, 'A')
+    numberMoves += 1
+    if (numberMoves == 9):
+        print("Looks like it's a tie!")
+        break
+    playerMove('B')
+    checkIfWinner(changingBoard, 'B')
+    numberMoves += 1
+
+
+
