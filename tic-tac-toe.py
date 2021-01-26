@@ -22,13 +22,13 @@ nine = originalBoard.index('9')
 print(' TIC TAC TOE\n Player A starts with X, Player B follows with O\n To move, enter the number for where you would like to place your X/O')
 print(*originalBoard, sep='')
 
-
-def playerMove(letter):
+#function to enter player's move and place the X/O on the board
+def playerMove(player):
     global changingBoard, originalBoard
-    print('Player ' + letter + ' enter your move: ')
+    print('Player ' + player + ' enter your move: ')
     move = input()
     #make sure that input is a digit from 1-9
-    if move not in possibleMoves or len(move) > 1:
+    while move not in possibleMoves or len(move) > 1:
         print('Error: Please enter a number from 1-9:')
         move = input()
     #use the original board to compare the player's input and then update the changing board
@@ -37,10 +37,10 @@ def playerMove(letter):
         if move == place and changingBoard[index] != ' ':
             print("Error: Space already taken. Enter again:")
             move = input()
-        elif move == place:
-            if letter == 'A':
+        if move == place:
+            if player == 'A':
                 changingBoard[index] = 'X'
-            if letter == 'B':
+            else:
                 changingBoard[index] = 'O'
     print(*changingBoard, sep='')
 
